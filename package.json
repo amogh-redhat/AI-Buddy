@@ -1,0 +1,135 @@
+{
+  "name": "ai-buddy",
+  "displayName": "AI Buddy",
+  "description": "Enterprise AI-powered engineering assistant with intelligent multi-provider routing",
+  "version": "0.1.0",
+  "publisher": "ai-buddy",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Machine Learning",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "ai-buddy",
+          "title": "AI Buddy",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "ai-buddy": [
+        {
+          "type": "webview",
+          "id": "aiBuddy.chatView",
+          "name": "Chat"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "aiBuddy.openChat",
+        "title": "AI Buddy: Open Chat"
+      },
+      {
+        "command": "aiBuddy.explain",
+        "title": "AI Buddy: Explain Selection"
+      },
+      {
+        "command": "aiBuddy.refactor",
+        "title": "AI Buddy: Refactor Selection"
+      },
+      {
+        "command": "aiBuddy.generateTests",
+        "title": "AI Buddy: Generate Tests"
+      },
+      {
+        "command": "aiBuddy.review",
+        "title": "AI Buddy: Review Code"
+      },
+      {
+        "command": "aiBuddy.debug",
+        "title": "AI Buddy: Debug"
+      },
+      {
+        "command": "aiBuddy.document",
+        "title": "AI Buddy: Generate Documentation"
+      },
+      {
+        "command": "aiBuddy.commitMessage",
+        "title": "AI Buddy: Generate Commit Message"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "aiBuddy.explain",
+          "group": "aibuddy@1",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "aiBuddy.refactor",
+          "group": "aibuddy@2",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "aiBuddy.generateTests",
+          "group": "aibuddy@3",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "aiBuddy.review",
+          "group": "aibuddy@4",
+          "when": "editorHasSelection"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AI Buddy",
+      "properties": {
+        "aiBuddy.backendUrl": {
+          "type": "string",
+          "default": "http://localhost:8080",
+          "description": "AI Buddy backend gateway URL"
+        },
+        "aiBuddy.preferredProvider": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "gemini",
+            "claude",
+            "ollama"
+          ],
+          "default": "auto",
+          "description": "Preferred AI provider (auto = intelligent routing)"
+        },
+        "aiBuddy.streamResponses": {
+          "type": "boolean",
+          "default": true,
+          "description": "Stream AI responses in real-time"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.90.0",
+    "esbuild": "^0.21.0",
+    "typescript": "^5.5.0"
+  }
+}
